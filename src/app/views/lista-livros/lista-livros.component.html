@@ -10,7 +10,7 @@
   <div class="resultados mensagem-erro" *ngIf="errorMessage">
     {{ errorMessage }}
   </div>
-  <div class="resultados" *ngIf="totalItems >= 0">
+  <div class="resultados" *ngIf="foundBooks$ | async">
     {{ totalItems }} livros encontrados
   </div>
   <div
