@@ -4,9 +4,11 @@ import {
   Observable,
   debounceTime,
   distinctUntilChanged,
+  filter,
   map,
   switchMap,
 } from 'rxjs';
+import { TYPEAHEAD_DELAY } from 'src/app/constants/constants';
 import { LivroVolumeInfo } from 'src/app/models/livro-volume-info';
 import { BookService } from 'src/app/services/book.service';
 import { Volume } from 'src/types/interfaces';
@@ -24,7 +26,8 @@ export class ListaLivrosComponent implements OnInit {
 
   ngOnInit(): void {
     this.foundBooks$ = this.searchField.valueChanges.pipe(
-      debounceTime(300),
+      filter((typedValue: string) => typedValue.length >= 2),
+      debounceTime(TYPEAHEAD_DELAY),
       distinctUntilChanged(),
       switchMap((typedValue: string) => this.bookService.search(typedValue)),
       map((result: Volume[]) => (result ? this.formatBooks(result) : null))
