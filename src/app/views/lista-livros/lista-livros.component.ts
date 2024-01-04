@@ -9,6 +9,8 @@ import {
   filter,
   map,
   switchMap,
+  tap,
+  throwError,
 } from 'rxjs';
 import { TYPEAHEAD_DELAY } from 'src/app/constants/constants';
 import { LivroVolumeInfo } from 'src/app/models/livro-volume-info';
@@ -24,6 +26,7 @@ export class ListaLivrosComponent implements OnInit {
   searchField = new FormControl();
   errorMessage = '';
   foundBooks$: Observable<LivroVolumeInfo[]>;
+  totalItems: number;
 
   constructor(private bookService: BookService) {}
 
@@ -33,12 +36,23 @@ export class ListaLivrosComponent implements OnInit {
       debounceTime(TYPEAHEAD_DELAY),
       distinctUntilChanged(),
       switchMap((typedValue: string) => this.bookService.search(typedValue)),
+      tap(
+        (result: GoogleBooksSearchResult) =>
+          (this.totalItems = result.totalItems)
+      ),
       map((result: GoogleBooksSearchResult) => result.items ?? []),
       map((result: Volume[]) => this.formatBooks(result)),
       catchError((error) => {
         console.error('erro:', error);
-        this.errorMessage = 'Ops, ocorreu um erro. Recarregue a aplicação';
-        return EMPTY;
+        // this.errorMessage = 'Ops, ocorreu um erro. Recarregue a aplicação';
+        // return EMPTY;
+        return throwError(
+          () =>
+            new Error(
+              (this.errorMessage =
+                'Ops, ocorreu um erro. Recarregue a aplicação')
+            )
+        );
       })
     );
   }
