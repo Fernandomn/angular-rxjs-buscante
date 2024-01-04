@@ -7,6 +7,9 @@
     </button>
   </div>
   <p>Busque por assunto, autoria, nome...</p>
+  <div class="resultados mensagem-erro" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </div>
   <div
     class="container-card"
     *ngIf="foundBooks$ | async as listaLivros; else telaInicial"
@@ -15,7 +18,7 @@
       <app-livro [livro]="livro"></app-livro>
     </div>
   </div>
-  
+
   <ng-template #telaInicial>
     <div class="imagens">
       <h1 class="titulo">
