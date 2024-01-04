@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map, tap } from 'rxjs';
-import { GoogleBooksSearchResult, Volume } from '../../types/api-types';
+import { GoogleBooksSearchResult, Volume } from '../../types/interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +18,7 @@ export class BookService {
       tap((result: GoogleBooksSearchResult) =>
         console.log('observing result:', result)
       ),
-      map((result: GoogleBooksSearchResult) => result.items),
+      map((result: GoogleBooksSearchResult) => result.items)
     );
   }
 }

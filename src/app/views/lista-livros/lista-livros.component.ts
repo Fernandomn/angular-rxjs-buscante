@@ -1,13 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { LivroVolumeInfo } from 'src/app/models/livro-volume-info';
 import { BookService } from 'src/app/services/book.service';
-import {
-  GoogleBooksSearchResult,
-  Livro,
-  Volume,
-  VolumeInfo,
-} from 'src/types/api-types';
+import { Volume } from 'src/types/interfaces';
 
 @Component({
   selector: 'app-lista-livros',
@@ -15,7 +11,7 @@ import {
   styleUrls: ['./lista-livros.component.css'],
 })
 export class ListaLivrosComponent implements OnDestroy {
-  listaLivros: Livro[];
+  listaLivros: LivroVolumeInfo[];
   searchField: string = '';
   subscription: Subscription;
 
@@ -31,21 +27,10 @@ export class ListaLivrosComponent implements OnDestroy {
         this.listaLivros = this.formatBooks(result);
       },
       error: (error: HttpErrorResponse) => console.error(error),
-      complete: () => console.log('Observable concluído'),
     });
   }
 
-  private formatBooks(items: Volume[]): Livro[] {
-    return [
-      ...items.map((item) => ({
-        title: item.volumeInfo?.title,
-        authors: item.volumeInfo?.authors,
-        publisher: item.volumeInfo?.publisher,
-        publishedDate: item.volumeInfo?.publishedDate,
-        description: item.volumeInfo?.description,
-        previewLink: item.volumeInfo?.previewLink,
-        thumbnail: item.volumeInfo?.imageLinks?.thumbnail,
-      })),
-    ];
+  private formatBooks(items: Volume[]): LivroVolumeInfo[] {
+    return [...items.map((item) => new LivroVolumeInfo(item))];
   }
 }
