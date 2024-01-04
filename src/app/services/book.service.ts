@@ -14,11 +14,8 @@ export class BookService {
   search(value: string): Observable<Volume[]> {
     const params = new HttpParams().append('q', value);
 
-    return this.http.get<GoogleBooksSearchResult>(this.apiUrl, { params }).pipe(
-      tap((result: GoogleBooksSearchResult) =>
-        console.log('observing result:', result)
-      ),
-      map((result: GoogleBooksSearchResult) => result.items)
-    );
+    return this.http
+      .get<GoogleBooksSearchResult>(this.apiUrl, { params })
+      .pipe(map((result: GoogleBooksSearchResult) => result.items));
   }
 }
