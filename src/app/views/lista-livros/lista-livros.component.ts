@@ -12,6 +12,7 @@ import {
   tap,
   throwError,
 } from 'rxjs';
+import { listAnimationTrigger } from 'src/app/animations/animations';
 import { TYPEAHEAD_DELAY } from 'src/app/constants/constants';
 import { LivroVolumeInfo } from 'src/app/models/livro-volume-info';
 import { BookService } from 'src/app/services/book.service';
@@ -21,6 +22,7 @@ import { GoogleBooksSearchResult, Volume } from 'src/types/interfaces';
   selector: 'app-lista-livros',
   templateUrl: './lista-livros.component.html',
   styleUrls: ['./lista-livros.component.css'],
+  animations:[listAnimationTrigger]
 })
 export class ListaLivrosComponent implements OnInit {
   searchField = new FormControl();

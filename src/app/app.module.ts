@@ -1,17 +1,18 @@
-import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
 
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CabecalhoComponent } from './componentes/cabecalho/cabecalho.component';
-import { RodapeComponent } from './componentes/rodape/rodape.component';
 import { LivroComponent } from './componentes/livro/livro.component';
+import { RodapeComponent } from './componentes/rodape/rodape.component';
+import { AuthorshipPipe } from './pipes/authorship.pipe';
 import { ListaLivrosComponent } from './views/lista-livros/lista-livros.component';
 import { ModalLivroComponent } from './views/modal-livro/modal-livro.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { AuthorshipPipe } from './pipes/authorship.pipe';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,7 @@ import { AuthorshipPipe } from './pipes/authorship.pipe';
     LivroComponent,
     ListaLivrosComponent,
     ModalLivroComponent,
-    AuthorshipPipe
+    AuthorshipPipe,
   ],
   imports: [
     BrowserModule,
@@ -29,9 +30,10 @@ import { AuthorshipPipe } from './pipes/authorship.pipe';
     RouterModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

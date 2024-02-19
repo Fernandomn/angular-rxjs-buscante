@@ -14,6 +14,7 @@
     {{ totalItems }} livros encontrados
   </div>
   <div
+    [@listAnimation]="foundBooks$"
     class="container-card"
     *ngIf="foundBooks$ | async as listaLivros; else telaInicial"
   >
